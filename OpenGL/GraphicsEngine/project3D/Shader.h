@@ -6,5 +6,6 @@ class Shader
 public:
 	static unsigned int CompileShaders(const char* vsFile, const char* fsFile);
 private:
-	static bool LoadShaderFromFile(const char* filePath, std::string& code)
+	static bool LoadShaderFromFile(const char* filePath, std::string& code);
+
 };
