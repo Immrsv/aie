@@ -28,7 +28,10 @@ void Camera::update(float deltaTime) {
 
 	// Capture Motion Input
 	vec3 move = vec3(0.f);
-	const float scaleTranslation = 1.5;
+	float scaleTranslation = 1.5;
+
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT_SHIFT))
+		scaleTranslation = 3.0;
 
 	if (input->isKeyDown(aie::INPUT_KEY_W))
 		move += vec3(0, 0, -1) * deltaTime * scaleTranslation; // Forward
@@ -38,9 +41,9 @@ void Camera::update(float deltaTime) {
 		move += vec3(-1, 0, 0) * deltaTime * scaleTranslation; // Left
 	if (input->isKeyDown(aie::INPUT_KEY_D))
 		move += vec3(1, 0, 0) * deltaTime * scaleTranslation; // Right
-	if (input->isKeyDown(aie::INPUT_KEY_Z))
+	if (input->isKeyDown(aie::INPUT_KEY_SPACE))
 		move += vec3(0, 1, 0) * deltaTime * scaleTranslation; // Up
-	if (input->isKeyDown(aie::INPUT_KEY_C))
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT_CONTROL))
 		move += vec3(0, -1, 0) * deltaTime * scaleTranslation;  // Down
 
 	if (move.length() > 0.00000001) { // Epsilon
