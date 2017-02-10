@@ -1,2 +1,2 @@
 # aie
-Coursework for Academy of Interactive Entertainment (2017-2018)
+Coursework for Academy of Interactive Entertainment (2017-2018) 
