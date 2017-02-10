@@ -41,7 +41,7 @@ bool Application3D::startup() {
 	defaultShader = Shader::CompileShaders("DefaultShader", "../Project3D/Basic.vert", "../Project3D/Basic.frag");
 
 	m_model.load("./models/stanford/bunny.obj");
-	m_model.m_shaderID = defaultShader;
+	m_model.m_shaderID = Shader::GetProgramID("DefaultShader");
 
 	return true;
 }

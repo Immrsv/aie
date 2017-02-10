@@ -30,7 +30,7 @@ void Model::load(const char* file) {
 	std::vector<tinyobj::material_t> materials;
 	std::string err;
 
-	std::cout << "Loading Model: " << file;
+	std::cout << "Loading Model: " << file << std::flush;
 
 	bool success = tinyobj::LoadObj(&attribs, &shapes, &materials, &err, file);
 

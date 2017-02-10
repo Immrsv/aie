@@ -10,8 +10,9 @@ public:
 	static unsigned int GetProgramID(std::string name);
 
 
-	//static std::map<std::string, unsigned int> collection;
+	
 private:
 	static bool LoadShaderFromFile(const char* filePath, std::string& code);
 
+	static std::map<std::string, unsigned int> collection;
 };

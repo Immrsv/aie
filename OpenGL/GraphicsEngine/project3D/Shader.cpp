@@ -5,6 +5,8 @@
 #include "Shader.h"
 #include <map>
 
+std::map<std::string, unsigned int> Shader::collection = std::map<std::string, unsigned int>();
+
 bool Shader::LoadShaderFromFile(const char* filePath, std::string& code)
 {
 	code = "";
@@ -26,10 +28,10 @@ bool Shader::LoadShaderFromFile(const char* filePath, std::string& code)
 
 GLuint Shader::GetProgramID(std::string name)
 {
-	//std::map<std::string, unsigned int>::iterator iter = collection.find(name);
-	//if (iter != collection.end()) {
-	//	return iter->second;
-	//}
+	std::map<std::string, unsigned int>::iterator iter = collection.find(name);
+	if (iter != collection.end()) {
+		return iter->second;
+	}
 
 	return 0;
 }
@@ -37,10 +39,10 @@ GLuint Shader::GetProgramID(std::string name)
 GLuint Shader::CompileShaders(std::string name, char* vsFile, const char* fsFile)
 {
 
-	//std::map<std::string, unsigned int>::iterator iter = collection.find(name);
-	//if (iter != collection.end()) {
-	//	return iter->second;
-	//}
+	std::map<std::string, unsigned int>::iterator iter = collection.find(name);
+	if (iter != collection.end()) {
+		return iter->second;
+	}
 
 	std::string vsCode, fsCode;
 	if (!(LoadShaderFromFile(vsFile, vsCode) && LoadShaderFromFile(fsFile, fsCode)))
@@ -73,6 +75,6 @@ GLuint Shader::CompileShaders(std::string name, char* vsFile, const char* fsFile
 	glDeleteShader(fragmentShader);
 	glDeleteShader(vertexShader);
 
-	//collection[name] = programID;
+	collection[name] = programID;
 	return programID;
 }
