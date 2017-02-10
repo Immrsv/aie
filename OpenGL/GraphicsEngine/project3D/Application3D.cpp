@@ -38,10 +38,18 @@ bool Application3D::startup() {
 											  getWindowWidth() / (float)getWindowHeight(),
 											  0.1f, 1000.f));
 
-	defaultShader = Shader::CompileShaders("DefaultShader", "../Project3D/Basic.vert", "../Project3D/Basic.frag");
+	Shader::CompileShaders("DefaultShader", "../Project3D/Basic.vert", "../Project3D/Basic.frag");
 
-	m_model.load("./models/stanford/bunny.obj");
-	m_model.m_shaderID = Shader::GetProgramID("DefaultShader");
+
+
+	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
+	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
+	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
+	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/dragon.obj"), Shader::GetProgramID("DefaultShader")));
+
+	m_entities[1]->m_transform = glm::translate(vec3(-10, 0, 0));
+	m_entities[2]->m_transform = glm::translate(vec3(10, 0, 0));
+	m_entities[3]->m_transform = glm::translate(vec3(-10, 0, -10));
 
 	return true;
 }
@@ -118,5 +126,7 @@ void Application3D::draw() {
 
 	Gizmos::draw(camera.getTransform());
 
-	m_model.draw(camera.getTransform());
+	for (auto entity : m_entities) {
+		entity->m_model->draw(entity->ui_shaderID, camera.getTransform() * entity->m_transform);
+	}
 }

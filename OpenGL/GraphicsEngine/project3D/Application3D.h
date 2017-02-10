@@ -6,6 +6,15 @@
 #include "Model.h"
 #include <glm/mat4x4.hpp>
 
+class Entity {
+public:
+	Entity(Model* model, unsigned int shaderID) : m_model(model), ui_shaderID(shaderID) {}
+	
+	Model* m_model;
+	unsigned int ui_shaderID;
+	glm::mat4 m_transform;
+};
+
 class Application3D : public aie::Application {
 public:
 
@@ -26,5 +35,5 @@ protected:
 	Camera		camera;
 
 	unsigned int defaultShader;
-	Model		m_model;
+	std::vector<Entity*> m_entities;
 };

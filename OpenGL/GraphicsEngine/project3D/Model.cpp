@@ -8,6 +8,32 @@ using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
+// static
+std::map<std::string, Model*> Model::m_models = std::map<std::string, Model*>();
+
+Model* Model::LoadModel(std::string file)
+{
+
+	std::cout << "Loading Model: " << file << std::flush;
+
+	std::map<std::string, Model*>::iterator iter = m_models.find(file);
+	if (iter != m_models.end()) {
+
+		std::cout << " - CACHED!" << std::endl;
+		return iter->second;
+	}
+
+	Model* model = new Model();
+	model->load(file.c_str());
+
+	std::cout << " - DONE!" << std::endl;
+
+	m_models[file] = model;
+
+	return model;
+}
+
+
 struct Vertex {
 	glm::vec4 position;
 	glm::vec4 color;
@@ -30,80 +56,20 @@ void Model::load(const char* file) {
 	std::vector<tinyobj::material_t> materials;
 	std::string err;
 
-	std::cout << "Loading Model: " << file << std::flush;
 
 	bool success = tinyobj::LoadObj(&attribs, &shapes, &materials, &err, file);
 
-	std::cout << " - DONE!" << std::endl;
 
 	createGLBuffers(attribs, shapes);
 }
 
-void Model::generatePlane() {
-	unsigned int rows = ui_rows = 10;
-	unsigned int cols = ui_cols = 10;
+void Model::draw(unsigned int shaderID, glm::mat4 pvmMatrix) {
 
-	Vertex* aoVertices = new Vertex[rows*cols];
-	for (unsigned int r = 0; r < rows; ++r) {
-		for (unsigned int c = 0; c < cols; ++c) {
-			aoVertices[r*cols + c].position = vec4((float)c, 0, (float)r, 1);
+	glUseProgram(shaderID);
 
-			vec3 color = vec3(sinf((c / (float)(cols - 1)) * (r / (float)(rows - 1))));
+	unsigned int projectionViewUniform = glGetUniformLocation(shaderID, "projectionViewWorldMatrix");
 
-			aoVertices[r*cols + c].color = vec4(color, 1);
-		}
-	}
-
-	unsigned int* auiIndices = new unsigned int[(rows - 1)*(cols - 1) * 6];
-	unsigned int index = 0;
-	for (unsigned int r = 0; r < (rows - 1); ++r) {
-		for (unsigned int c = 0; c < (cols - 1); ++c) {
-			// triangle 1
-			auiIndices[index++] = r * cols + c;
-			auiIndices[index++] = (r + 1) * cols + c;
-			auiIndices[index++] = (r + 1) * cols + (c + 1);
-
-			// tiangle 2
-			auiIndices[index++] = r * cols + c;
-			auiIndices[index++] = (r + 1) * cols + (c + 1);
-			auiIndices[index++] = r * cols + (c + 1);
-		}
-	}
-
-
-	glGenVertexArrays(1, &m_VAO);
-
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_IBO);
-
-	glBindVertexArray(m_VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, (rows*cols) * sizeof(Vertex), aoVertices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec4)));
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, (rows - 1)*(cols - 1) * 6 * sizeof(unsigned int), auiIndices, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	delete[] aoVertices;
-}
-void Model::draw(glm::mat4 pvMatrix) {
-
-	glUseProgram(m_shaderID);
-
-	unsigned int projectionViewUniform = glGetUniformLocation(m_shaderID, "projectionViewWorldMatrix");
-
-	glUniformMatrix4fv(projectionViewUniform, 1, false, glm::value_ptr(pvMatrix));
+	glUniformMatrix4fv(projectionViewUniform, 1, false, glm::value_ptr(pvmMatrix));
 
 	for (auto& gl : m_glInfo) { 
 		glBindVertexArray(gl.m_VAO); 
@@ -162,17 +128,17 @@ void Model::createGLBuffers(tinyobj::attrib_t & attribs, std::vector<tinyobj::sh
 		// bind vertex data 
 		glBindBuffer(GL_ARRAY_BUFFER, m_glInfo[shapeIndex].m_VBO); 
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(OBJVertex), vertices.data(), GL_STATIC_DRAW); 
-		glEnableVertexAttribArray(0); 
 		
 		//position 
+		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVertex), 0); 
-		glEnableVertexAttribArray(1); 
-		
+				
 		//normal data 
+		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, sizeof(OBJVertex), (void*)12); 
-		glEnableVertexAttribArray(2); 
-		
+				
 		//texture data 
+		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(OBJVertex), (void*)24); 
 		glBindVertexArray(0); glBindBuffer(GL_ARRAY_BUFFER, 0); 
 		
