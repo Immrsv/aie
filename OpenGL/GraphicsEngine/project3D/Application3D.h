@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Camera.h"
 #include "Input.h"
+#include "Model.h"
 #include <glm/mat4x4.hpp>
 
 class Application3D : public aie::Application {
@@ -23,4 +24,7 @@ protected:
 	glm::mat4	m_projectionMatrix;
 
 	Camera		camera;
+
+	unsigned int defaultShader;
+	Model		m_model;
 };

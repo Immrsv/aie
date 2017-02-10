@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+#include "Shader.h"
+
 using glm::vec2;
 using glm::vec3;
 using glm::vec4;
@@ -36,6 +38,10 @@ bool Application3D::startup() {
 											  getWindowWidth() / (float)getWindowHeight(),
 											  0.1f, 1000.f));
 
+	defaultShader = Shader::CompileShaders("DefaultShader", "../Project3D/Basic.vert", "../Project3D/Basic.frag");
+
+	m_model.load("asdf");
+	m_model.m_shaderID = defaultShader;
 
 	return true;
 }
@@ -111,4 +117,6 @@ void Application3D::draw() {
 		0.1f, 1000.f));
 
 	Gizmos::draw(camera.getTransform());
+
+	m_model.draw(camera.getTransform());
 }

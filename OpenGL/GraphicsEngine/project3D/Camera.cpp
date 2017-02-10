@@ -64,7 +64,7 @@ void Camera::update(float deltaTime) {
 	}
 	lastMouse = mouse;
 
-	std::cout << "Position: " << v3_position.x << ", " << v3_position.y << ", " << v3_position.z << std::endl;
+	//std::cout << "Position: " << v3_position.x << ", " << v3_position.y << ", " << v3_position.z << std::endl;
 
 }
 
