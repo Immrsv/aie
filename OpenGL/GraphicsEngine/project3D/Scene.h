@@ -11,18 +11,19 @@
 #include "Model.h"
 #include "Shader.h"
 #include "Light.h"
+#include <Texture.h>
 
 using glm::mat4;
 using glm::vec3;
 
 struct Entity {
 public:
-	Entity(Model* model, unsigned int shaderID) : m_model(model), ui_shaderID(shaderID) {}
+	Entity(Model* model, aie::Texture* texture, unsigned int shaderID) : m_model(model), m_texture(texture), ui_shaderID(shaderID) {}
 
 	Model* m_model;
 	unsigned int ui_shaderID;
 	glm::mat4 m_transform;
-
+	aie::Texture* m_texture;
 
 };
 

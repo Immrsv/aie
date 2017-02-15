@@ -65,7 +65,6 @@ void Model::load(const char* file) {
 
 void Model::draw() {
 
-
 	for (auto& gl : m_glInfo) { 
 		glBindVertexArray(gl.m_VAO); 
 		glDrawArrays(GL_TRIANGLES, 0, gl.m_faceCount * 3); 
@@ -81,7 +80,7 @@ void Model::createGLBuffers(tinyobj::attrib_t & attribs, std::vector<tinyobj::sh
 	std::vector<OBJVertex> vertices;
 
 	int shapeIndex = 0;
-
+	
 	for (auto& shape : shapes) {
 	
 		// Generate GL Buffers
@@ -135,7 +134,10 @@ void Model::createGLBuffers(tinyobj::attrib_t & attribs, std::vector<tinyobj::sh
 		//texture data 
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(OBJVertex), (void*)24); 
-		glBindVertexArray(0); glBindBuffer(GL_ARRAY_BUFFER, 0); 
+
+
+		glBindVertexArray(0); 
+		glBindBuffer(GL_ARRAY_BUFFER, 0); 
 		
 		shapeIndex++;
 	}

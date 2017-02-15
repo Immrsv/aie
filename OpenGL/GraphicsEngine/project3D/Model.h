@@ -16,11 +16,13 @@ public:
 	unsigned int m_VBO;
 	unsigned int m_IBO;
 	
+
 	void draw();
 
 	static Model* LoadModel(std::string file);
 
 private:
+
 
 	static std::map<std::string, Model*> m_models;
 
@@ -31,6 +33,7 @@ private:
 	};
 
 	std::vector<OpenGLInfo> m_glInfo;
+
 
 	void createGLBuffers(tinyobj::attrib_t& attribs, std::vector<tinyobj::shape_t>& shapes);
 

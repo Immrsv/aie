@@ -29,7 +29,11 @@ void Scene::init() {
 	m_textures.push_back(new aie::Texture("./textures/numbered_grid.tga"));
 
 	// Load Models
-	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("TexturedShader")));
+	m_entities.push_back(
+			new Entity(Model::LoadModel("./models/stanford/bunny.obj"), 
+			new aie::Texture("./models/stanford/bunny.obj"),
+			Shader::GetProgramID("TexturedShader"))
+	);
 	//m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
 	//m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
 	//m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/dragon.obj"), Shader::GetProgramID("DefaultShader")));
@@ -61,6 +65,15 @@ void Scene::draw() {
 			runOnce = cameraPosUniform == 0;
 			std::cout << "cameraPosUniform: " << cameraPosUniform << std::endl;
 		}
+
+
+		// set texture slot 
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, entity->m_texture->getHandle());
+
+		// tell the shader where it is 
+		GLuint texLoc = glGetUniformLocation(entity->ui_shaderID, "diffuse"); 
+		glUniform1i(texLoc, /*GL_TEXTURE*/ 0);
 
 
 		glUniformMatrix4fv(pvmUniform, 1, false, glm::value_ptr(camera.getTransform() * entity->m_transform));
