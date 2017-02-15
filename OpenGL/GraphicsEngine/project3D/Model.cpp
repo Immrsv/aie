@@ -63,13 +63,8 @@ void Model::load(const char* file) {
 	createGLBuffers(attribs, shapes);
 }
 
-void Model::draw(unsigned int shaderID, glm::mat4 pvmMatrix) {
+void Model::draw() {
 
-	glUseProgram(shaderID);
-
-	unsigned int projectionViewUniform = glGetUniformLocation(shaderID, "projectionViewWorldMatrix");
-
-	glUniformMatrix4fv(projectionViewUniform, 1, false, glm::value_ptr(pvmMatrix));
 
 	for (auto& gl : m_glInfo) { 
 		glBindVertexArray(gl.m_VAO); 

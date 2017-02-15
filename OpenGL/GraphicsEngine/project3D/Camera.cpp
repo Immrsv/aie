@@ -28,10 +28,10 @@ void Camera::update(float deltaTime) {
 
 	// Capture Motion Input
 	vec3 move = vec3(0.f);
-	float scaleTranslation = 1.5;
+	float scaleTranslation = 4.0;
 
 	if (input->isKeyDown(aie::INPUT_KEY_LEFT_SHIFT))
-		scaleTranslation = 3.0;
+		scaleTranslation *= 2.0;
 
 	if (input->isKeyDown(aie::INPUT_KEY_W))
 		move += vec3(0, 0, -1) * deltaTime * scaleTranslation; // Forward
@@ -97,6 +97,11 @@ void Camera::setPosition(vec3 position) {
 	v3_position = position;
 	isViewDirty = true;
 }
+vec3 Camera::getPosition()
+{
+	return v3_position;
+}
+
 void Camera::setTheta(float theta) {
 	f_theta = theta;
 	isViewDirty = true;

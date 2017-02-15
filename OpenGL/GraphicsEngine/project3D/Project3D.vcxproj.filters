@@ -37,6 +37,21 @@
     <ClCompile Include="tiny_obj_loader.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application3D.h">
@@ -54,12 +69,39 @@
     <ClInclude Include="tiny_obj_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.vert">
       <Filter>Shader Files</Filter>
     </None>
     <None Include="Basic.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Lighted.vert">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Lighted.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Textured.vert">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Textured.frag">
       <Filter>Shader Files</Filter>
     </None>
   </ItemGroup>

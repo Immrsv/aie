@@ -1,19 +1,13 @@
 #pragma once
 
+
+#include <glm/mat4x4.hpp>
+
 #include "Application.h"
 #include "Camera.h"
 #include "Input.h"
 #include "Model.h"
-#include <glm/mat4x4.hpp>
-
-class Entity {
-public:
-	Entity(Model* model, unsigned int shaderID) : m_model(model), ui_shaderID(shaderID) {}
-	
-	Model* m_model;
-	unsigned int ui_shaderID;
-	glm::mat4 m_transform;
-};
+#include "Scene.h"
 
 class Application3D : public aie::Application {
 public:
@@ -29,11 +23,8 @@ public:
 
 protected:
 
-	glm::mat4	m_viewMatrix;
-	glm::mat4	m_projectionMatrix;
 
-	Camera		camera;
 
-	unsigned int defaultShader;
-	std::vector<Entity*> m_entities;
+	Scene scene;
+
 };

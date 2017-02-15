@@ -26,30 +26,13 @@ bool Application3D::startup() {
 
 	// initialise gizmo primitive counts
 	Gizmos::create(10000, 10000, 10000, 10000);
-	
-	// create simple camera transforms
-	//m_viewMatrix = glm::lookAt(vec3(10), vec3(0), vec3(0, 1, 0));
-	//m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,
-	//									  getWindowWidth() / (float)getWindowHeight(),
-	//									  0.1f, 1000.f);
-
-	camera.setViewFor(vec3(0,10,-10), 90.f, -45.f);
-	camera.setProjection( glm::perspective(glm::pi<float>() * 0.25f,
-											  getWindowWidth() / (float)getWindowHeight(),
-											  0.1f, 1000.f));
-
-	Shader::CompileShaders("DefaultShader", "../Project3D/Basic.vert", "../Project3D/Basic.frag");
 
 
+	scene.init();
 
-	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
-	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
-	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("DefaultShader")));
-	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/dragon.obj"), Shader::GetProgramID("DefaultShader")));
-
-	m_entities[1]->m_transform = glm::translate(vec3(-10, 0, 0));
-	m_entities[2]->m_transform = glm::translate(vec3(10, 0, 0));
-	m_entities[3]->m_transform = glm::translate(vec3(-10, 0, -10));
+	scene.camera.setProjection(glm::perspective(glm::pi<float>() * 0.25f,
+		getWindowWidth() / (float)getWindowHeight(),
+		0.1f, 1000.f));
 
 	return true;
 }
@@ -68,11 +51,7 @@ void Application3D::update(float deltaTime) {
 	float time = getTime();
 
 
-	//camera.setTheta(camera.getTheta() + 10);
-
-	camera.update(deltaTime);
-
-
+	scene.update(deltaTime);
 
 	// wipe the gizmos clean for this frame
 	Gizmos::clear();
@@ -120,13 +99,13 @@ void Application3D::draw() {
 	//m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,
 	//									  getWindowWidth() / (float)getWindowHeight(),
 	//									  0.1f, 1000.f);
-	camera.setProjection(glm::perspective(glm::pi<float>() * 0.25f,
+	scene.camera.setProjection(glm::perspective(glm::pi<float>() * 0.25f,
 		getWindowWidth() / (float)getWindowHeight(),
 		0.1f, 1000.f));
 
-	Gizmos::draw(camera.getTransform());
+	Gizmos::draw(scene.camera.getTransform());
 
-	for (auto entity : m_entities) {
-		entity->m_model->draw(entity->ui_shaderID, camera.getTransform() * entity->m_transform);
-	}
+	scene.draw();
+
+
 }

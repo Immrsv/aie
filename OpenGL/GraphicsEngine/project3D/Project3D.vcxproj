@@ -63,6 +63,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,16 +92,26 @@
   <ItemGroup>
     <ClCompile Include="Application3D.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application3D.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="tiny_obj_loader.h" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +121,10 @@
     <None Include="Basic.vert">
       <DeploymentContent>false</DeploymentContent>
     </None>
+    <None Include="Lighted.frag" />
+    <None Include="Lighted.vert" />
+    <None Include="Textured.frag" />
+    <None Include="Textured.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

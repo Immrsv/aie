@@ -16,7 +16,7 @@ public:
 	unsigned int m_VBO;
 	unsigned int m_IBO;
 	
-	void draw(unsigned int shaderID, glm::mat4 pvmMatrix);
+	void draw();
 
 	static Model* LoadModel(std::string file);
 

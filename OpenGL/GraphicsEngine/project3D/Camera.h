@@ -24,6 +24,8 @@ public:
 
 	void setViewFor(vec3 position, float theta, float phi);
 	void setPosition(vec3 position);
+	vec3 getPosition();
+
 	void setTheta(float theta);
 	void setPhi(float phi);
 	float getTheta();
