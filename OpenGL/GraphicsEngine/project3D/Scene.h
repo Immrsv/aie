@@ -5,6 +5,8 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
+#include <Texture.h>
+
 #include "Camera.h"
 #include "Model.h"
 #include "Shader.h"
@@ -45,6 +47,7 @@ public:
 
 	std::vector<Entity*> m_entities;
 	std::vector<Light*> m_lights;
+	std::vector<aie::Texture*> m_textures;
 
 };
 

@@ -26,7 +26,7 @@ void Scene::init() {
 	Shader::CompileShaders("TexturedShader", "../Project3D/Textured.vert", "../Project3D/Textured.frag");
 
 	// Load Textures
-
+	m_textures.push_back(new aie::Texture("./textures/numbered_grid.tga"));
 
 	// Load Models
 	m_entities.push_back(new Entity(Model::LoadModel("./models/stanford/bunny.obj"), Shader::GetProgramID("TexturedShader")));
