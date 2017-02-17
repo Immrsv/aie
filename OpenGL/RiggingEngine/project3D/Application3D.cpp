@@ -51,7 +51,7 @@ void Application3D::update(float deltaTime) {
 	float time = getTime();
 
 
-	scene.update(deltaTime);
+
 
 	// wipe the gizmos clean for this frame
 	Gizmos::clear();
@@ -96,15 +96,14 @@ void Application3D::draw() {
 	clearScreen();
 
 	// update perspective in case window resized
-	//m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,
-	//									  getWindowWidth() / (float)getWindowHeight(),
-	//									  0.1f, 1000.f);
+
 	scene.camera.setProjection(glm::perspective(glm::pi<float>() * 0.25f,
 		getWindowWidth() / (float)getWindowHeight(),
 		0.1f, 1000.f));
 
 	Gizmos::draw(scene.camera.getTransform());
 
+	scene.update(0.01f);
 	scene.draw();
 
 

@@ -126,6 +126,8 @@
     <None Include="Lighted.vert" />
     <None Include="Morphing.frag" />
     <None Include="Morphing.vert" />
+    <None Include="Rigging.frag" />
+    <None Include="Rigging.vert" />
     <None Include="Textured.frag" />
     <None Include="Textured.vert" />
   </ItemGroup>

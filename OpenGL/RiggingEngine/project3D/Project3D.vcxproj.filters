@@ -110,5 +110,11 @@
     <None Include="Morphing.vert">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="Rigging.vert">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Rigging.frag">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

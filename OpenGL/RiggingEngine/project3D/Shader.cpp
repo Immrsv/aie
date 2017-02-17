@@ -33,6 +33,7 @@ GLuint Shader::GetProgramID(std::string name)
 		return iter->second;
 	}
 
+	std::cerr << "Requested Shader Not Found: " << name << std::endl;
 	return 0;
 }
 
