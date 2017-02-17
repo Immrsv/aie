@@ -12,6 +12,8 @@
 #include "Shader.h"
 #include "Light.h"
 #include <Texture.h>
+#include <FBXFile.h>
+#include <vector>
 
 using glm::mat4;
 using glm::vec3;
@@ -24,6 +26,7 @@ public:
 	unsigned int ui_shaderID;
 	glm::mat4 m_transform;
 	aie::Texture* m_texture;
+	float timestep = 0.0f;
 
 };
 

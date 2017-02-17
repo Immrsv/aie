@@ -1,7 +1,7 @@
 #include "gl_core_4_4.h"
 #include "Texture.h"
 
-#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 namespace aie {

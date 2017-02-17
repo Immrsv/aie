@@ -58,7 +58,7 @@ void Camera::update(float deltaTime) {
 
 	if (input->isMouseButtonDown(aie::INPUT_MOUSE_BUTTON_RIGHT)) {
 		
-		const float scaleRotation = 0.05;
+		const float scaleRotation = 0.05f;
 		vec2 deltaMouse = (mouse - lastMouse) * scaleRotation;
 
 		setTheta(f_theta + deltaMouse.x);

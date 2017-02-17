@@ -104,5 +104,11 @@
     <None Include="Textured.frag">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="Morphing.frag">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Morphing.vert">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
