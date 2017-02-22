@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 #include <glm/glm.hpp>
-//#include <glm/ext.hpp>
+#include <glm/ext.hpp>
 #include <gl_core_4_4.h>
 #include <FBXFile.h>
 
@@ -30,7 +30,8 @@ void Scene::init() {
 	m_textures.push_back(new aie::Texture("./textures/numbered_grid.tga"));
 
 	// Load Models
-	m_entities.push_back(new Entity(Model::LoadModel("./models/Robot/mecanimloco.fbx"), new aie::Texture("./textures/numbered_grid.tga"), Shader::GetProgramID("RiggingShader")));
+	//m_entities.push_back(new Entity(Model::LoadModel("./models/Robot/mecanimloco.fbx"), new aie::Texture("./textures/numbered_grid.tga"), Shader::GetProgramID("RiggingShader")));
+	m_entities.push_back(new Entity(Model::LoadModel("./models/Pyro/pyro.fbx"), new aie::Texture("./textures/numbered_grid.tga"), Shader::GetProgramID("RiggingShader")));
 	m_entities.back()->m_transform = glm::rotate(3.f, glm::vec3(0, 1, 0));
 
 	// Setup Lighting
@@ -41,7 +42,7 @@ void Scene::init() {
 void Scene::update(float deltaTime) {
 
 	for (auto entity : m_entities) {
-		entity->timestep += deltaTime * 0.1f;
+		entity->timestep += deltaTime * 1.f;
 
 		FBXSkeleton* skel = entity->m_model->m_fbx->getSkeletonByIndex(0);
 		FBXAnimation* anim = entity->m_model->m_fbx->getAnimationByIndex(0);
@@ -78,17 +79,19 @@ void Scene::draw() {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, entity->m_texture->getHandle());
 
+		glm::mat4 scaledModel = glm::scale(entity->m_transform, vec3(0.01f));
+
 		GLuint loc;
 		// tell the shader where it is 
 		loc = glGetUniformLocation(entity->ui_shaderID, "diffuseTex"); 
 		glUniform1i(loc, /*GL_TEXTURE*/ 0);
 
-		glUniformMatrix4fv(pvmUniform, 1, false, glm::value_ptr(camera.getTransform() * entity->m_transform));
-		glUniformMatrix4fv(modelUniform, 1, false, glm::value_ptr(entity->m_transform));
+		glUniformMatrix4fv(pvmUniform, 1, false, glm::value_ptr(camera.getTransform() * scaledModel));
+		glUniformMatrix4fv(modelUniform, 1, false, glm::value_ptr(scaledModel));
 		glUniformMatrix4fv(bonesUniform, skeleton->m_boneCount, false, (float*)skeleton->m_bones);
 
-		//glUniform3fv(cameraPosUniform, 3, glm::value_ptr(camera.getPosition()));
-		glUniform3f(cameraPosUniform, camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
+		glUniform3fv(cameraPosUniform, 1, glm::value_ptr(camera.getPosition()));
+		//glUniform3f(cameraPosUniform, camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 
 		entity->m_model->draw();
 	}

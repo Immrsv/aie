@@ -24,16 +24,24 @@ void main() {
 
 	ivec4 index = ivec4(indices);
 
-	vec4 P = bones[ index.x ] * position * weights.x;
-	P += bones[ index.y ] * position * weights.y;
-	P += bones[ index.z ] * position * weights.z;
-	P += bones[ index.w ] * position * weights.w;
+	vec4 tempWeight;// =  weights * vec4( 1.f,1.f,1.f,1.f );
+	tempWeight = normalize(weights);
+	
+	vec3 P = (bones[ index.x ] * position * weights.x).xyz;
+		P += (bones[ index.y ] * position * weights.y).xyz;
+		P += (bones[ index.z ] * position * weights.z).xyz;
+		P += (bones[ index.w ] * position * weights.w).xyz;
 
-    vPosition = (modelMatrix * vec4(position.xyz,1)).xyz;
-    vNormal = (modelMatrix * vec4(normal.xyz,0)).xyz;
+	vec4 N = inverse(transpose(bones[ index.x ])) * normal * tempWeight.x;
+	N += inverse(transpose(bones[ index.y ])) * normal * tempWeight.y;
+	N += inverse(transpose(bones[ index.z ])) * normal * tempWeight.z;
+	N += inverse(transpose(bones[ index.w ])) * normal * tempWeight.w;
+
+    vPosition = (modelMatrix * vec4(P.xyz,1)).xyz;
+    vNormal = normalize((modelMatrix * vec4(N.xyz,0)).xyz);
     uv = texcoord;
 
-	debug = (bones[ index.y ] * position * weights.y).xyz;
+	//debug = vec3(1);//normalize(tempWeight.xyz);
 
     gl_Position = pvmMatrix * vec4(P.xyz, 1);
 }
